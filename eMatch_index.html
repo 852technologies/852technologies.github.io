@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>852 Technologies · SaaS · Software · AI · Program Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1A5CD6; --blue-lt:#4E84E8; --blue-dk:#0D3D97;
+  --amber:#F5A623; --amber2:#E09210; --amber-lt:#FBBF5A;
+  --teal:#1D9E75; --speed:0.25s;
+}
+[data-theme="dark"]{
+  --bg:#080F1C; --bg2:#0B1525; --bg3:#0F1E34;
+  --fg:#FFFFFF; --fg2:rgba(255,255,255,0.88); --fg3:rgba(255,255,255,0.72);
+  --fg4:rgba(255,255,255,0.55); --fg5:rgba(255,255,255,0.35);
+  --card:rgba(255,255,255,0.04); --border:rgba(255,255,255,0.09);
+  --border2:rgba(26,92,214,0.32); --blue-gl:rgba(26,92,214,0.14);
+  --nav-bg:rgba(8,15,28,0.94); --shadow:none;
+  --grid:rgba(255,255,255,0.018);
+  --rule-bg:linear-gradient(90deg,var(--blue) 0%,var(--blue-lt) 40%,transparent 80%);
+  --bar-bg:rgba(255,255,255,0.09);
+  --amber-text:var(--amber); --amber-eyebrow:var(--amber);
+  --em-bg:#080F1C; --em-title:#FFFFFF; --em-sub:rgba(255,255,255,0.72);
+}
+[data-theme="light"]{
+  --bg:#F5F7FC; --bg2:#EAEFF8; --bg3:#DFE6F4;
+  --fg:#0A1628; --fg2:rgba(10,22,40,0.95); --fg3:rgba(10,22,40,0.82);
+  --fg4:rgba(10,22,40,0.68); --fg5:rgba(10,22,40,0.52);
+  --card:rgba(255,255,255,0.8); --border:rgba(10,22,40,0.12);
+  --border2:rgba(26,92,214,0.2); --blue-gl:rgba(26,92,214,0.08);
+  --nav-bg:rgba(245,247,252,0.96); --shadow:0 1px 24px rgba(10,22,40,0.1);
+  --grid:rgba(10,22,40,0.024);
+  --rule-bg:linear-gradient(90deg,var(--blue) 0%,var(--blue-lt) 40%,transparent 80%);
+  --bar-bg:rgba(10,22,40,0.09);
+  --amber-text:var(--amber); --amber-eyebrow:var(--amber);
+  --em-bg:#EAEFF8; --em-title:#0A1628; --em-sub:rgba(10,22,40,0.72);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--fg);font-family:'DM Sans',Arial,sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;transition:background var(--speed),color var(--speed);}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;z-index:0;}
+/* THEME TOGGLE */
+.theme-toggle{width:36px;height:36px;border-radius:50%;background:var(--blue-gl);border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--speed);flex-shrink:0;}
+.theme-toggle:hover{background:rgba(26,92,214,0.22);}
+.theme-toggle svg{width:17px;height:17px;}
+.icon-sun{display:none;}.icon-moon{display:block;}
+[data-theme="light"] .icon-sun{display:block;}[data-theme="light"] .icon-moon{display:none;}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:var(--shadow);transition:background var(--speed),box-shadow var(--speed);}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none;}
+.nav-mark{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:5px 8px 4px 7px;flex-shrink:0;}
+.nav-mark::before,.nav-mark::after,.nav-mark .c-tr,.nav-mark .c-bl{content:'';position:absolute;width:7px;height:7px;border-color:var(--blue);border-style:solid;}
+.nav-mark::before{top:0;left:0;border-width:1.5px 0 0 1.5px;}
+.nav-mark::after{bottom:0;right:0;border-width:0 1.5px 1.5px 0;}
+.nav-mark .c-tr{top:0;right:0;border-width:1.5px 1.5px 0 0;}
+.nav-mark .c-bl{bottom:0;left:0;border-width:0 0 1.5px 1.5px;}
+.nav-852{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:20px;color:var(--blue-lt);line-height:1;letter-spacing:-0.5px;font-variant-numeric:lining-nums tabular-nums;transition:color var(--speed);}
+.nav-divider{width:1px;height:20px;background:var(--border);}
+.nav-name{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:15px;letter-spacing:0.02em;color:var(--fg2);line-height:1;transition:color var(--speed);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg3);text-decoration:none;transition:color var(--speed);white-space:nowrap;}
+.nav-links a:hover{color:var(--fg);}
+.nav-cta{background:var(--amber)!important;color:#080F1C!important;padding:8px 18px;border-radius:3px;font-weight:600!important;white-space:nowrap;}
+.nav-cta:hover{background:var(--amber-lt)!important;}
+/* SHARED */
+section{position:relative;z-index:1;transition:background var(--speed);}
+.container{max-width:1200px;margin:0 auto;padding:0 64px;}
+.section-pad{padding:120px 64px;}
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:var(--blue-lt);margin-bottom:14px;display:flex;align-items:center;gap:10px;transition:color var(--speed);}
+.section-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--blue-lt);transition:background var(--speed);}
+.section-eyebrow.amber-eye{color:var(--amber-eyebrow);}
+.section-eyebrow.amber-eye::before{background:var(--amber-eyebrow);}
+.section-title{font-family:'Playfair Display',Georgia,serif;font-size:52px;font-weight:900;line-height:1.06;letter-spacing:-0.5px;margin-bottom:16px;color:var(--fg);transition:color var(--speed);}
+.section-title em{font-style:italic;color:var(--blue-lt);}
+.section-title .amber{color:var(--amber-text);}
+.section-sub{font-size:15px;font-weight:300;color:var(--fg3);line-height:1.75;max-width:500px;margin-bottom:56px;transition:color var(--speed);}
+.rule{height:2px;background:var(--rule-bg);position:relative;z-index:1;}
+.btn-primary{background:var(--blue);color:#fff;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:13px 26px;border-radius:3px;transition:background 0.2s,transform 0.15s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{background:var(--blue-lt);transform:translateY(-1px);}
+.btn-ghost{color:var(--fg3);font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:13px 26px;border:1.5px solid rgba(255,255,255,0.28);border-radius:3px;transition:border-color 0.2s,color 0.2s;display:inline-flex;align-items:center;gap:8px;}
+[data-theme="light"] .btn-ghost{border-color:rgba(10,22,40,0.32);}
+.btn-ghost:hover{border-color:var(--blue-lt);color:var(--fg);}
+.btn-amber{background:var(--amber);color:#080F1C;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:13px 26px;border-radius:3px;transition:background 0.2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-amber:hover{background:var(--amber2);}
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 64px 80px;overflow:hidden;transition:background var(--speed);}
+.hero-glow{position:absolute;top:-120px;left:-100px;width:680px;height:680px;background:radial-gradient(ellipse,rgba(26,92,214,0.12) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.hero-glow-r{position:absolute;bottom:-80px;right:-60px;width:500px;height:500px;background:radial-gradient(ellipse,rgba(78,132,232,0.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
+[data-theme="light"] .hero-glow{background:radial-gradient(ellipse,rgba(26,92,214,0.07) 0%,transparent 60%);}
+.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:var(--blue-lt);margin-bottom:22px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--blue-lt);}
+.hero-headline{font-family:'Playfair Display',Georgia,serif;font-size:72px;font-weight:900;line-height:1.04;letter-spacing:-1px;margin-bottom:28px;color:var(--fg);transition:color var(--speed);}
+.hero-headline em{font-style:italic;color:var(--blue-lt);}
+.hero-body{font-size:15px;font-weight:300;line-height:1.75;color:var(--fg3);max-width:460px;margin-bottom:44px;transition:color var(--speed);}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px;}
+.hero-proof{display:flex;align-items:center;gap:12px;margin-top:4px;}
+.hero-proof-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;animation:blink 2s ease-in-out infinite;}
+.hero-proof-text{font-size:12px;color:var(--fg4);line-height:1.5;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero-visual{display:flex;justify-content:center;align-items:center;}
+.hero-mark-wrap{position:relative;width:300px;height:300px;display:flex;align-items:center;justify-content:center;}
+/* Rings — uniform, slightly darker than original v10 */
+.hero-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(26,92,214,0.36);}
+.hero-ring:nth-child(1){width:300px;height:300px;}
+.hero-ring:nth-child(2){width:220px;height:220px;}
+.hero-ring:nth-child(3){width:140px;height:140px;}
+/* 4-corner bracket */
+.hero-bracket{position:relative;padding:18px 22px;}
+.hb-tl,.hb-tr,.hb-bl,.hb-br{position:absolute;width:20px;height:20px;border-color:var(--blue-lt);border-style:solid;}
+.hb-tl{top:0;left:0;border-width:2.5px 0 0 2.5px;}
+.hb-tr{top:0;right:0;border-width:2.5px 2.5px 0 0;}
+.hb-bl{bottom:0;left:0;border-width:0 0 2.5px 2.5px;}
+.hb-br{bottom:0;right:0;border-width:0 2.5px 2.5px 0;}
+.hero-numeral{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:108px;line-height:1;letter-spacing:-2px;color:var(--fg);font-variant-numeric:lining-nums tabular-nums;animation:num-glow 4s ease-in-out infinite;transition:color var(--speed);}
+@keyframes num-glow{0%,100%{color:var(--fg);}50%{color:var(--blue-lt);}}
+.hero-stats{position:relative;z-index:1;max-width:1200px;margin:60px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.stat-cell{background:var(--bg2);padding:26px 28px;transition:background 0.2s,transform 0.15s;cursor:default;}
+.stat-cell:hover{background:var(--bg3);transform:translateY(-2px);}
+.stat-val{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:900;color:var(--blue-lt);line-height:1;margin-bottom:5px;font-variant-numeric:lining-nums tabular-nums;}
+.stat-lbl{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg4);}
+/* SERVICES */
+.services-stack{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.svc-full{position:relative;overflow:hidden;display:block;min-height:360px;}
+.svc-full.amber-card{background:var(--bg3);}
+.svc-full.blue-card{background:var(--bg);}
+.svc-full.neutral-card{background:var(--bg2);}
+.svc-full::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:3;}
+.svc-full.amber-card::before{background:linear-gradient(90deg,var(--amber),var(--amber-lt),transparent 70%);}
+.svc-full.blue-card::before{background:linear-gradient(90deg,var(--blue),var(--blue-lt),transparent 70%);}
+.svc-full.neutral-card::before{background:linear-gradient(90deg,var(--blue-lt),var(--blue),transparent 70%);}
+/* Background art — light grey SVGs, very transparent */
+.svc-bg-art{position:absolute;right:0;top:0;height:100%;width:55%;display:flex;align-items:center;justify-content:flex-end;opacity:0.27;z-index:0;pointer-events:none;padding-right:20px;}
+.svc-fade{position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;pointer-events:none;}
+.svc-full.amber-card .svc-fade{background:linear-gradient(to right,#0F1E34 40%,rgba(15,30,52,0.85) 58%,transparent 80%);}
+[data-theme="light"] .svc-full.amber-card .svc-fade{background:linear-gradient(to right,#DFE6F4 40%,rgba(223,230,244,0.85) 58%,transparent 80%);}
+.svc-full.neutral-card .svc-fade{background:linear-gradient(to right,#0B1525 40%,rgba(11,21,37,0.85) 58%,transparent 80%);}
+[data-theme="light"] .svc-full.neutral-card .svc-fade{background:linear-gradient(to right,#EAEFF8 40%,rgba(234,239,248,0.85) 58%,transparent 80%);}
+.svc-full.blue-card .svc-fade{background:linear-gradient(to right,#080F1C 40%,rgba(8,15,28,0.85) 58%,transparent 80%);}
+[data-theme="light"] .svc-full.blue-card .svc-fade{background:linear-gradient(to right,#F5F7FC 40%,rgba(245,247,252,0.85) 58%,transparent 80%);}
+.svc-content{position:relative;z-index:2;padding:52px 48px;max-width:680px;}
+.svc-num-label{font-family:'Playfair Display',Georgia,serif;font-size:12px;font-weight:700;letter-spacing:0.22em;color:var(--blue-lt);opacity:0.7;margin-bottom:18px;font-variant-numeric:lining-nums tabular-nums;}
+.svc-cat-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;padding:5px 12px;border-radius:2px;margin-bottom:16px;}
+.svc-cat-badge.amber-b{color:var(--amber-text);background:rgba(245,166,35,0.14);border:1px solid rgba(245,166,35,0.38);}
+.svc-cat-badge.blue-b{color:var(--blue-lt);background:var(--blue-gl);border:1px solid var(--border2);}
+.svc-cat-badge .badge-dot{width:5px;height:5px;border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0;}
+.svc-cat-name{font-family:'Playfair Display',Georgia,serif;font-size:32px;font-weight:900;line-height:1.1;margin-bottom:14px;}
+.svc-cat-name.amber-n{color:var(--amber-text);}
+.svc-cat-name.blue-n{color:var(--blue-lt);}
+.svc-cat-name.white-n{color:var(--fg);}
+.svc-cat-desc{font-size:14px;font-weight:300;color:var(--fg3);line-height:1.78;margin-bottom:24px;max-width:480px;transition:color var(--speed);}
+.saas-products{display:flex;flex-direction:column;gap:9px;max-width:480px;}
+.saas-prod-card{border-radius:4px;padding:15px 18px;transition:background 0.2s,border-color 0.2s,transform 0.15s;cursor:default;}
+.saas-prod-card:hover{transform:translateX(4px);}
+.saas-prod-card.amber-pc{background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.35);}
+.saas-prod-card.amber-pc:hover{background:rgba(245,166,35,0.18);border-color:rgba(245,166,35,0.6);}
+.saas-prod-card.blue-pc{background:var(--blue-gl);border:1px solid var(--border2);}
+.saas-prod-card.blue-pc:hover{background:rgba(26,92,214,0.22);border-color:rgba(78,132,232,0.5);}
+.saas-prod-card.dim-pc{background:var(--card);border:1px solid var(--border);}
+.saas-prod-card.dim-pc:hover{background:rgba(255,255,255,0.07);}
+.saas-prod-name{font-size:14px;font-weight:600;margin-bottom:4px;}
+.saas-prod-desc{font-size:13px;color:var(--fg3);line-height:1.6;transition:color var(--speed);}
+.saas-prod-link{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;display:inline-block;margin-top:6px;}
+.saas-prod-link:hover{opacity:0.75;}
+.itc-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:640px;}
+.itc-item{background:var(--blue-gl);border:1px solid var(--border2);border-radius:4px;padding:16px 18px;transition:background 0.2s,border-color 0.2s,transform 0.15s;cursor:default;}
+.itc-item:hover{background:rgba(26,92,214,0.22);border-color:rgba(78,132,232,0.5);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+.itc-item-name{font-size:14px;font-weight:600;color:var(--fg);margin-bottom:4px;transition:color var(--speed);}
+.itc-item-desc{font-size:12px;color:var(--fg4);line-height:1.5;transition:color var(--speed);}
+.sw-sub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:640px;}
+.sw-sub{background:var(--blue-gl);border:1px solid var(--border2);border-radius:4px;padding:15px 14px;transition:background 0.2s,border-color 0.2s,transform 0.15s;cursor:default;}
+.sw-sub:hover{background:rgba(26,92,214,0.24);border-color:rgba(78,132,232,0.5);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+.sw-sub-name{font-size:12px;font-weight:600;color:var(--fg);margin-bottom:4px;line-height:1.3;transition:color var(--speed);}
+.sw-sub-desc{font-size:11px;color:var(--fg4);line-height:1.5;transition:color var(--speed);}
+/* EMATCH */
+#ematch{background:var(--em-bg);transition:background var(--speed);}
+.ematch-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.ematch-point{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.ematch-point-dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+.ematch-point-title{font-size:14px;font-weight:600;color:var(--fg);margin-bottom:3px;transition:color var(--speed);}
+.ematch-point-desc{font-size:13px;color:var(--fg3);line-height:1.65;transition:color var(--speed);}
+.em-product-card{background:linear-gradient(155deg,#1248B4 0%,#1C5AC8 100%);border:1px solid rgba(245,166,35,0.55);border-radius:8px;padding:36px 32px;}
+[data-theme="dark"] .em-product-card{background:linear-gradient(155deg,#081830 0%,#0C2244 100%);}
+.em-wordmark-sub{font-size:10px;color:rgba(255,255,255,0.62);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:22px;font-weight:500;}
+.em-divider{border:none;border-top:1px solid rgba(255,255,255,0.14);margin-bottom:22px;}
+.em-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.em-stat-box{background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:14px 12px;text-align:center;transition:background 0.2s,border-color 0.2s;cursor:default;}
+.em-stat-box:hover{background:rgba(245,166,35,0.14);border-color:rgba(245,166,35,0.4);}
+.em-stat-box strong{display:block;font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:700;color:var(--amber);line-height:1.2;}
+.em-stat-box span{font-size:10.5px;color:rgba(255,255,255,0.62);letter-spacing:0.06em;margin-top:3px;display:block;font-weight:500;}
+.em-features{list-style:none;display:flex;flex-direction:column;gap:15px;margin-top:28px;}
+.em-features li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--fg3);line-height:1.65;transition:color var(--speed);}
+.em-check{flex-shrink:0;width:20px;height:20px;margin-top:1px;background:rgba(245,166,35,0.12);border:1.5px solid rgba(245,166,35,0.45);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.em-check svg{width:10px;height:10px;}
+.em-features li strong{color:var(--fg);font-weight:600;}
+.em-cta-link{display:inline-flex;align-items:center;gap:8px;color:var(--amber);text-decoration:none;font-weight:600;font-size:15px;margin-top:28px;transition:gap 0.2s;}
+.em-cta-link:hover{gap:14px;}
+/* TIERS */
+.tiers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;margin-top:22px;}
+.tier-card{
+  background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+  padding:32px 28px;position:relative;display:flex;flex-direction:column;
+  transition:transform 0.22s,border-color 0.22s,box-shadow 0.22s,background var(--speed);
+  cursor:default;
+}
+.tier-card:hover{transform:translateY(-5px);border-color:rgba(78,132,232,0.45);box-shadow:0 8px 28px rgba(0,0,0,0.25);}
+/* Featured = Max/Full Suite (rightmost card) */
+.tier-card.tier-featured{
+  background:linear-gradient(155deg,#0E44A8 0%,#1855CC 100%);
+  border:2px solid rgba(245,166,35,0.70);
+  border-top:3px solid var(--amber);
+  box-shadow:0 0 40px rgba(245,166,35,0.18),0 8px 32px rgba(14,68,168,0.5);
+  padding-top:32px;
+}
+[data-theme="light"] .tier-card.tier-featured{background:linear-gradient(155deg,#1248B4 0%,#1C5AC8 100%);}
+[data-theme="dark"] .tier-card.tier-featured{background:linear-gradient(155deg,#0F1E34 0%,#131F38 100%);box-shadow:0 0 40px rgba(245,166,35,0.15),0 8px 32px rgba(0,0,0,0.55);}
+.tier-card.tier-featured:hover{transform:translateY(-5px);border-color:rgba(245,166,35,0.9);box-shadow:0 0 52px rgba(245,166,35,0.2),0 12px 36px rgba(0,0,0,0.4);}
+.tier-powerful-badge{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  background:var(--amber);color:#080F1C;
+  font-size:9px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;
+  padding:4px 14px;border-radius:100px;white-space:nowrap;
+}
+.tier-pill-label{display:inline-block;background:rgba(245,166,35,0.08);color:var(--amber);border:1px solid rgba(245,166,35,0.52);font-size:10px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-bottom:14px;}
+.tier-card.tier-featured .tier-pill-label{background:rgba(255,255,255,0.15);border-color:rgba(245,166,35,0.80);color:#F5A623;}
+.tier-name{font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:900;color:var(--fg);margin-bottom:8px;transition:color var(--speed);}
+.tier-card.tier-featured .tier-name{color:#FFFFFF;font-size:30px;}
+.tier-desc{font-size:13px;color:var(--fg3);margin-bottom:22px;line-height:1.6;flex-grow:1;transition:color var(--speed);}
+.tier-card.tier-featured .tier-desc{color:rgba(255,255,255,0.78);}
+.tier-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.tier-list li{font-size:13px;color:var(--fg3);display:flex;align-items:center;gap:9px;transition:color var(--speed);}
+.tier-card.tier-featured .tier-list li{color:rgba(255,255,255,0.82);font-size:14px;}
+.tier-tick{flex-shrink:0;}
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.why-card{background:var(--bg);padding:44px 40px;transition:background 0.2s;}
+.why-card:hover{background:var(--bg3);}
+[data-theme="dark"] .why-num{color:rgba(78,132,232,0.2);}
+[data-theme="light"] .why-num{color:rgba(26,92,214,0.24);}
+.why-num{font-family:'Playfair Display',Georgia,serif;font-size:72px;font-weight:900;line-height:1;margin-bottom:-10px;letter-spacing:-2px;font-variant-numeric:lining-nums tabular-nums;}
+.why-title{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;color:var(--fg);margin-bottom:12px;transition:color var(--speed);}
+.why-desc{font-size:13.5px;color:var(--fg3);line-height:1.75;transition:color var(--speed);}
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.team-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:36px 32px;transition:border-color 0.25s,background var(--speed);}
+.team-card:hover{border-color:rgba(245,166,35,0.4);background:var(--bg2);}
+.team-avatar{width:80px;height:80px;border-radius:50%;border:2.5px solid rgba(245,166,35,0.5);object-fit:cover;object-position:center top;display:block;margin-bottom:20px;}
+.team-role-lbl{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber-text);margin-bottom:6px;line-height:1.8;}
+.team-role-lbl .role-line2{font-size:10px;font-weight:700;letter-spacing:0.16em;display:block;}
+.team-member-name{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;color:var(--fg);margin-bottom:18px;transition:color var(--speed);}
+.team-creds{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:20px;}
+.team-creds li{font-size:13px;color:var(--fg3);display:flex;align-items:flex-start;gap:9px;line-height:1.5;transition:color var(--speed);}
+.team-creds li::before{content:'—';color:var(--amber-text);flex-shrink:0;font-weight:700;}
+.cert-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.cert-chip{background:rgba(245,166,35,0.09);border:1px solid rgba(245,166,35,0.25);color:var(--fg4);font-size:10.5px;font-weight:600;padding:4px 10px;border-radius:100px;transition:background 0.2s,color 0.2s;cursor:default;}
+.cert-chip:hover{background:rgba(245,166,35,0.2);color:var(--amber-text);}
+/* ASSESSMENT */
+.assessment-glow{position:absolute;top:50%;left:30%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(26,92,214,0.06) 0%,transparent 65%);pointer-events:none;}
+.assessment-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1;}
+.assessment-dims{display:grid;grid-template-columns:1fr;gap:8px;margin-top:28px;}
+.assessment-dim{display:grid;grid-template-columns:140px 1fr 60px;gap:12px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;transition:background 0.2s,border-color 0.2s;cursor:default;}
+.assessment-dim:hover{background:var(--bg3);border-color:var(--border2);}
+.dim-name{font-size:12px;font-weight:500;color:var(--fg);transition:color var(--speed);}
+.dim-bar-wrap{height:4px;background:var(--bar-bg);border-radius:2px;overflow:hidden;}
+.dim-bar{height:100%;border-radius:2px;background:var(--blue-lt);}
+.dim-val{font-family:'DM Sans',Arial,sans-serif;font-size:13px;font-weight:700;color:var(--blue-lt);text-align:right;font-variant-numeric:lining-nums tabular-nums;letter-spacing:-0.02em;}
+.assessment-right{text-align:center;}
+.assessment-box{background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:28px 36px;margin-bottom:28px;transition:background var(--speed),border-color var(--speed);}
+.a-price-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-lt);margin-bottom:10px;}
+.a-headline{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;color:var(--fg);margin:10px 0 4px;transition:color var(--speed);}
+.a-includes{list-style:none;text-align:left;display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+.a-includes li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg3);transition:color var(--speed);}
+.a-includes li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue-lt);flex-shrink:0;}
+/* CONTACT */
+.contact-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(26,92,214,0.06) 0%,transparent 65%);pointer-events:none;}
+.contact-inner{position:relative;z-index:1;text-align:center;max-width:660px;margin:0 auto;}
+.contact-headline{font-family:'Playfair Display',Georgia,serif;font-size:56px;font-weight:900;line-height:1.06;letter-spacing:-1px;margin-bottom:20px;color:var(--fg);transition:color var(--speed);}
+.contact-headline em{font-style:italic;color:var(--blue-lt);}
+.contact-sub{font-size:15px;color:var(--fg3);line-height:1.75;max-width:480px;margin:0 auto 40px;transition:color var(--speed);}
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:36px;transition:background var(--speed),border-color var(--speed);}
+.contact-cell{background:var(--bg3);padding:20px 22px;transition:background 0.2s;cursor:default;}
+.contact-cell:hover{background:var(--bg2);}
+.contact-lbl{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg4);margin-bottom:6px;transition:color var(--speed);}
+.contact-val{font-size:13px;color:var(--fg2);transition:color var(--speed);}
+.contact-val a{color:var(--blue-lt);text-decoration:none;}
+.contact-cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+/* FOOTER */
+footer{position:relative;z-index:1;background:var(--bg2);border-top:1px solid var(--border);padding:28px 64px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;transition:background var(--speed),border-color var(--speed);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-mark{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:5px 8px 4px 7px;}
+.footer-mark::before,.footer-mark::after,.footer-mark .c-tr,.footer-mark .c-bl{content:'';position:absolute;width:6px;height:6px;border-color:var(--blue);border-style:solid;}
+.footer-mark::before{top:0;left:0;border-width:1.5px 0 0 1.5px;}
+.footer-mark::after{bottom:0;right:0;border-width:0 1.5px 1.5px 0;}
+.footer-mark .c-tr{top:0;right:0;border-width:1.5px 1.5px 0 0;}
+.footer-mark .c-bl{bottom:0;left:0;border-width:0 0 1.5px 1.5px;}
+.footer-852{font-family:'Playfair Display',Georgia,serif;font-weight:900;font-size:16px;color:var(--blue-lt);line-height:1;letter-spacing:-0.3px;font-variant-numeric:lining-nums tabular-nums;transition:color var(--speed);}
+.footer-name{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:13px;letter-spacing:0.02em;color:var(--fg4);transition:color var(--speed);}
+.footer-links{display:flex;gap:24px;list-style:none;}
+.footer-links a{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg4);text-decoration:none;transition:color var(--speed);}
+.footer-links a:hover{color:var(--fg);}
+.footer-copy{font-size:11px;color:var(--fg5);transition:color var(--speed);}
+/* ANIMATIONS */
+.fade-in{opacity:0;transform:translateY(20px);animation:fadeUp 0.65s ease forwards;}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+.d1{animation-delay:0.1s}.d2{animation-delay:0.22s}.d3{animation-delay:0.36s}.d4{animation-delay:0.5s}.d5{animation-delay:0.64s}
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav,.section-pad,.container{padding-left:32px;padding-right:32px;}
+  .footer{padding-left:32px;padding-right:32px;}
+  .hero{padding:100px 32px 60px;}
+  .hero-inner{gap:40px;}
+  .hero-headline{font-size:52px;}
+  .svc-bg-art{width:45%;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .svc-bg-art,.svc-fade{display:none;}
+  .ematch-grid{grid-template-columns:1fr;gap:40px;}
+  .tiers-grid{grid-template-columns:1fr;}
+  .why-grid,.team-grid,.assessment-inner{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .section-title{font-size:36px;}
+  .contact-headline{font-size:36px;}
+  .itc-grid{grid-template-columns:1fr;}
+  .sw-sub-grid{grid-template-columns:1fr;}
+  .container{padding-left:0;padding-right:0;}
+  footer{flex-direction:column;align-items:center;text-align:center;gap:14px;}
+  .footer-logo{justify-content:center;}
+  .footer-links{justify-content:center;width:100%;}
+  .footer-copy{text-align:center;width:100%;}
+  .tiers-grid{grid-template-columns:1fr;}
+  .tier-card.tier-featured{transform:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-mark"><span class="c-tr"></span><span class="c-bl"></span><span class="nav-852">852</span></div>
+    <div class="nav-divider"></div>
+    <div class="nav-name">Technologies Ltd.</div>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#ematch">eMatch</a></li>
+      <li><a href="#why">About</a></li>
+      <li><a href="#assessment" class="nav-cta">Free AI Health Check →</a></li>
+    </ul>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch colour theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="var(--blue-lt)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="background:var(--bg);">
+  <div class="hero-glow"></div><div class="hero-glow-r"></div>
+  <div style="width:100%;position:relative;z-index:1;">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow fade-in d1">SaaS · Software &amp; AI · IT Consulting</div>
+        <h1 class="hero-headline fade-in d2">We build<br>AI applications<br>that <em>work.</em></h1>
+        <p class="hero-body fade-in d3">852 Technologies is a practitioner-led technology firm. We built eMatch — a production AI talent matching platform — and we bring that hands-on engineering experience to every engagement: SaaS, custom software, AI development, workflow automation, and program management.</p>
+        <div class="hero-actions fade-in d4">
+          <a href="#assessment" class="btn-primary">Free AI Health Check →</a>
+          <a href="#ematch" class="btn-ghost">See eMatch</a>
+        </div>
+        <div class="hero-proof fade-in d4">
+          <div class="hero-proof-dot"></div>
+          <div class="hero-proof-text">We don't just advise on AI — <strong>eMatch</strong> is our own AI application, running 24×7 in production</div>
+        </div>
+      </div>
+      <div class="hero-visual fade-in d5">
+        <div class="hero-mark-wrap">
+          <div class="hero-ring"></div><div class="hero-ring"></div><div class="hero-ring"></div>
+          <svg viewBox="-80 40 240 160" xmlns="http://www.w3.org/2000/svg" width="200" height="200" style="position:absolute;opacity:0.22;" aria-hidden="true">
+            <g transform="translate(40,118)">
+              <line x1="0" y1="-74" x2="0" y2="74" stroke="#8AA4BE" stroke-width="0.8"/>
+              <path d="M0,-9 A9,9,0,0,0,0,9" fill="none" stroke="#F5A623" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M0,-16 A16,16,0,0,0,0,16" fill="none" stroke="#F5A623" stroke-width="4" stroke-linecap="round"/>
+              <path d="M0,-23 A23,23,0,0,0,0,23" fill="none" stroke="#F5A623" stroke-width="3.6" stroke-linecap="round"/>
+              <path d="M0,-31 A31,31,0,0,0,0,31" fill="none" stroke="#F5A623" stroke-width="3.2" stroke-linecap="round"/>
+              <path d="M0,-40 A40,40,0,0,0,0,40" fill="none" stroke="#F5A623" stroke-width="2.8" stroke-linecap="round"/>
+              <path d="M0,-9 A9,9,0,0,1,0,9" fill="none" stroke="#8AA4BE" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M0,-16 A16,16,0,0,1,0,16" fill="none" stroke="#8AA4BE" stroke-width="4" stroke-linecap="round"/>
+              <path d="M0,-23 A23,23,0,0,1,0,23" fill="none" stroke="#8AA4BE" stroke-width="3.6" stroke-linecap="round"/>
+              <path d="M0,-31 A31,31,0,0,1,0,31" fill="none" stroke="#8AA4BE" stroke-width="3.2" stroke-linecap="round"/>
+              <path d="M0,-40 A40,40,0,0,1,0,40" fill="none" stroke="#8AA4BE" stroke-width="2.8" stroke-linecap="round"/>
+              <circle r="6.5" fill="#F5A623"/>
+              <circle r="2.5" fill="#080F1C"/>
+            </g>
+          </svg>
+          <div class="hero-bracket">
+            <span class="hb-tl"></span><span class="hb-tr"></span><span class="hb-bl"></span><span class="hb-br"></span>
+            <span class="hero-numeral">852</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-stats fade-in d5">
+      <div class="stat-cell"><div class="stat-val">AI Applications</div><div class="stat-lbl">Built &amp; operated in production</div></div>
+      <div class="stat-cell"><div class="stat-val">24×7</div><div class="stat-lbl">Continuous AI operations</div></div>
+      <div class="stat-cell"><div class="stat-val">SaaS</div><div class="stat-lbl">Cloud-native product development</div></div>
+      <div class="stat-cell"><div class="stat-val">PMP Certified</div><div class="stat-lbl">Program &amp; project management</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SERVICES -->
+<section id="services" class="section-pad" style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-eyebrow">Products &amp; Services</div>
+    <h2 class="section-title">Three disciplines.<br><em>One partner.</em></h2>
+    <p class="section-sub">SaaS products, custom software and AI development, and IT consulting — delivered by practitioners who have built and operated production AI systems.</p>
+    <div class="services-stack">
+
+      <!-- SaaS — light grey art background -->
+      <div class="svc-full amber-card">
+        <div class="svc-bg-art">
+          <svg viewBox="0 0 380 310" xmlns="http://www.w3.org/2000/svg" width="380" height="310">
+            <rect width="380" height="310" rx="10" fill="#C8D8CC"/>
+            <text x="190" y="22" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#333" text-anchor="middle">eMatch AI Platform</text>
+            <text x="190" y="36" font-family="Arial,sans-serif" font-size="9" letter-spacing="2" fill="#777" text-anchor="middle">CAPABILITY OVERVIEW</text>
+            <!-- Grid pentagons (100%, 75%, 50%, 25%) -->
+            <polygon points="190,50 280,126 246,232 134,232 100,126" fill="none" stroke="#AABBC8" stroke-width="1"/>
+            <polygon points="190,76 258,132 232,213 148,213 122,132" fill="none" stroke="#AABBC8" stroke-width="0.8"/>
+            <polygon points="190,102 237,139 218,193 162,193 143,139" fill="none" stroke="#AABBC8" stroke-width="0.8"/>
+            <polygon points="190,127 213,148 204,174 176,174 167,148" fill="none" stroke="#AABBC8" stroke-width="0.6"/>
+            <!-- Axis lines from center -->
+            <line x1="190" y1="152" x2="190" y2="50" stroke="#9AACBC" stroke-width="0.8"/>
+            <line x1="190" y1="152" x2="280" y2="126" stroke="#9AACBC" stroke-width="0.8"/>
+            <line x1="190" y1="152" x2="246" y2="232" stroke="#9AACBC" stroke-width="0.8"/>
+            <line x1="190" y1="152" x2="134" y2="232" stroke="#9AACBC" stroke-width="0.8"/>
+            <line x1="190" y1="152" x2="100" y2="126" stroke="#9AACBC" stroke-width="0.8"/>
+            <!-- Data polygon: AI Matching 95, Auto-Apply 85, Security 99, Analytics 78, Resume AI 92 -->
+            <polygon points="190,62 267,130 245,231 147,214 107,128" fill="rgba(65,85,115,0.36)" stroke="#5A7090" stroke-width="1.5"/>
+            <!-- Data dots -->
+            <circle cx="190" cy="62" r="4" fill="#5A7090"/>
+            <circle cx="267" cy="130" r="4" fill="#5A7090"/>
+            <circle cx="245" cy="231" r="4" fill="#5A7090"/>
+            <circle cx="147" cy="214" r="4" fill="#5A7090"/>
+            <circle cx="107" cy="128" r="4" fill="#5A7090"/>
+            <!-- Axis labels -->
+            <text x="190" y="43" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#444" text-anchor="middle">AI Matching</text>
+            <text x="292" y="124" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#444" text-anchor="start">Auto-Apply</text>
+            <text x="252" y="247" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#444" text-anchor="middle">Security</text>
+            <text x="128" y="247" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#444" text-anchor="middle">Analytics</text>
+            <text x="88" y="124" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#444" text-anchor="end">Résumé AI</text>
+            <!-- % values next to dots -->
+            <text x="190" y="56" font-family="Arial,sans-serif" font-size="8" fill="#333" text-anchor="middle">95%</text>
+            <text x="272" y="127" font-family="Arial,sans-serif" font-size="8" fill="#333" text-anchor="start">85%</text>
+            <text x="249" y="244" font-family="Arial,sans-serif" font-size="8" fill="#333" text-anchor="start">99%</text>
+            <text x="143" y="211" font-family="Arial,sans-serif" font-size="8" fill="#333" text-anchor="end">78%</text>
+            <text x="102" y="125" font-family="Arial,sans-serif" font-size="8" fill="#333" text-anchor="end">92%</text>
+            <!-- Footer -->
+            <line x1="20" y1="262" x2="360" y2="262" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+            <rect x="20" y="273" width="10" height="10" rx="2" fill="rgba(45,140,90,0.32)" stroke="#2A8A58" stroke-width="1"/>
+            <text x="34" y="282" font-family="Arial,sans-serif" font-size="9" fill="#555">eMatch capability profile</text>
+            <text x="360" y="282" font-family="Arial,sans-serif" font-size="9" fill="#888" text-anchor="end">SaaS · AI-Powered · 24×7</text>
+          </svg>
+        </div>
+        <div class="svc-fade"></div>
+        <div class="svc-content">
+          <div class="svc-num-label">01</div>
+          <div class="svc-cat-badge amber-b"><span class="badge-dot" style="background:var(--amber);"></span>SaaS Products</div>
+          <div class="svc-cat-name amber-n">SaaS</div>
+          <p class="svc-cat-desc">Cloud-native AI products designed for immediate value — subscribe, configure, and go live in days. Our flagship eMatch is available now, with more SaaS products in development.</p>
+          <div class="saas-products">
+            <div class="saas-prod-card amber-pc">
+              <div class="saas-prod-name" style="color:var(--amber-text);">eMatch</div>
+              <div class="saas-prod-desc">AI talent matching platform — Starter, Plus &amp; Max plans for recruitment agencies of every size. AI fingerprint profiling, résumé rewriting, auto-apply, 24×7 chatbot.</div>
+              <a href="#ematch" class="saas-prod-link" style="color:var(--amber);font-weight:700;font-size:11px;">See details →</a>
+            </div>
+            <div class="saas-prod-card blue-pc">
+              <div class="saas-prod-name" style="color:var(--fg);">eMatch White-label</div>
+              <div class="saas-prod-desc">Full custom branding for enterprise clients or reseller deployments — complete theming support and dedicated infrastructure under your brand.</div>
+            </div>
+            <div class="saas-prod-card dim-pc">
+              <div class="saas-prod-name" style="color:var(--fg3);">More in future</div>
+              <div class="saas-prod-desc" style="color:var(--fg4);">Additional SaaS products in development. Contact us to discuss early access or partnership opportunities.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IT Consultant — light grey gantt -->
+      <div class="svc-full neutral-card">
+        <div class="svc-bg-art">
+          <svg viewBox="0 0 420 290" xmlns="http://www.w3.org/2000/svg" width="420" height="290">
+            <rect width="420" height="290" rx="8" fill="#C8D4DC"/>
+            <text x="20" y="28" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#333">Delivery Timeline</text>
+            <text x="20" y="42" font-family="Arial,sans-serif" font-size="9" letter-spacing="2" fill="#666">ILLUSTRATIVE PROJECT PLAN</text>
+            <line x1="20" y1="56" x2="400" y2="56" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
+            <text x="162" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK1</text>
+            <text x="197" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK2</text>
+            <text x="232" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK3</text>
+            <text x="267" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK4</text>
+            <text x="302" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK5</text>
+            <text x="337" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK6</text>
+            <text x="372" y="68" font-family="Arial,sans-serif" font-size="8" fill="#777" text-anchor="middle">WK7</text>
+            <line x1="179" y1="56" x2="179" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <line x1="214" y1="56" x2="214" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <line x1="249" y1="56" x2="249" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <line x1="284" y1="56" x2="284" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <line x1="319" y1="56" x2="319" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <line x1="354" y1="56" x2="354" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <line x1="389" y1="56" x2="389" y2="270" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+            <text x="20" y="91" font-family="Arial,sans-serif" font-size="10" fill="#444">AI Readiness Assessment</text>
+            <rect x="144" y="81" width="70" height="14" rx="3" fill="#888"/>
+            <text x="179" y="92" font-family="Arial,sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="600">W1–W2</text>
+            <text x="20" y="119" font-family="Arial,sans-serif" font-size="10" fill="#444">Program Setup &amp; Governance</text>
+            <rect x="179" y="109" width="70" height="14" rx="3" fill="#6A88A0"/>
+            <text x="214" y="120" font-family="Arial,sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="600">W2–W3</text>
+            <text x="20" y="147" font-family="Arial,sans-serif" font-size="10" fill="#444">Project Delivery Sprints</text>
+            <rect x="214" y="137" width="140" height="14" rx="3" fill="#6A88A0"/>
+            <text x="284" y="148" font-family="Arial,sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="600">W3–W6</text>
+            <text x="20" y="175" font-family="Arial,sans-serif" font-size="10" fill="#444">Business Process Re-Engineering</text>
+            <rect x="249" y="165" width="105" height="14" rx="3" fill="#5A9A7A"/>
+            <text x="301" y="176" font-family="Arial,sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="600">W4–W6</text>
+            <text x="20" y="203" font-family="Arial,sans-serif" font-size="10" fill="#444">Review &amp; Board Report</text>
+            <rect x="354" y="193" width="35" height="14" rx="3" fill="#888"/>
+            <text x="371" y="204" font-family="Arial,sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="600">W7</text>
+            <line x1="20" y1="222" x2="400" y2="222" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+            <rect x="20" y="234" width="10" height="10" rx="2" fill="#888"/>
+            <text x="34" y="243" font-family="Arial,sans-serif" font-size="9" fill="#555">Assessment / Reporting</text>
+            <rect x="160" y="234" width="10" height="10" rx="2" fill="#6A88A0"/>
+            <text x="174" y="243" font-family="Arial,sans-serif" font-size="9" fill="#555">Program &amp; Delivery</text>
+            <rect x="300" y="234" width="10" height="10" rx="2" fill="#5A9A7A"/>
+            <text x="314" y="243" font-family="Arial,sans-serif" font-size="9" fill="#555">Process Work</text>
+            <polygon points="389,252 395,258 389,264 383,258" fill="#888"/>
+          </svg>
+        </div>
+        <div class="svc-fade"></div>
+        <div class="svc-content">
+          <div class="svc-num-label">02</div>
+          <div class="svc-cat-badge blue-b"><span class="badge-dot" style="background:var(--blue-lt);"></span>IT Consulting</div>
+          <div class="svc-cat-name white-n">IT Consultant</div>
+          <p class="svc-cat-desc">PMP-certified program management and transformation consulting — delivered by practitioners with decades of real-world delivery. From strategy to board-level reporting, we govern the complexity so you don't have to.</p>
+          <div class="itc-grid">
+            <div class="itc-item"><div class="itc-item-name">Program Management</div><div class="itc-item-desc">Multi-stream governance, dependency management, C-suite reporting, and PMP-certified oversight for complex programs</div></div>
+            <div class="itc-item"><div class="itc-item-name">Project Delivery</div><div class="itc-item-desc">On-time, on-budget, on-scope delivery of technology and transformation initiatives — Agile, Waterfall, or Hybrid</div></div>
+            <div class="itc-item"><div class="itc-item-name">Business Process Re-Engineering</div><div class="itc-item-desc">Lean-driven diagnosis of inefficiencies, process redesign, KPI design, and measurable throughput improvement</div></div>
+            <div class="itc-item"><div class="itc-item-name">AI Readiness Assessment</div><div class="itc-item-desc">Maturity scoring across 5 dimensions, use-case mapping, prioritised roadmap, and board-ready executive summary</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Software & Application — light grey workflow art -->
+      <div class="svc-full blue-card">
+        <div class="svc-bg-art">
+          <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" width="380" height="300">
+            <defs>
+              <marker id="arrowGy" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#888"/></marker>
+            </defs>
+            <rect width="380" height="300" rx="8" fill="#C4D0DC"/>
+            <line x1="82" y1="60" x2="140" y2="60" stroke="#999" stroke-width="1.5" marker-end="url(#arrowGy)" stroke-dasharray="4,3"/>
+            <line x1="82" y1="140" x2="140" y2="140" stroke="#999" stroke-width="1.5" marker-end="url(#arrowGy)" stroke-dasharray="4,3"/>
+            <line x1="82" y1="220" x2="140" y2="220" stroke="#999" stroke-width="1.5" marker-end="url(#arrowGy)" stroke-dasharray="4,3"/>
+            <line x1="230" y1="60" x2="296" y2="60" stroke="#777" stroke-width="1.5" marker-end="url(#arrowGy)" stroke-dasharray="4,3"/>
+            <line x1="230" y1="140" x2="296" y2="140" stroke="#777" stroke-width="1.5" marker-end="url(#arrowGy)" stroke-dasharray="4,3"/>
+            <line x1="230" y1="220" x2="296" y2="220" stroke="#777" stroke-width="1.5" marker-end="url(#arrowGy)" stroke-dasharray="4,3"/>
+            <line x1="185" y1="80" x2="185" y2="120" stroke="#AAA" stroke-width="1"/>
+            <line x1="185" y1="160" x2="185" y2="200" stroke="#AAA" stroke-width="1"/>
+            <rect x="20" y="40" width="62" height="40" rx="6" fill="rgba(42,95,176,0.18)" stroke="#5A85C0" stroke-width="1.5"/>
+            <text x="51" y="56" font-family="Arial,sans-serif" font-size="9" fill="#2A5FB0" text-anchor="middle">Document</text>
+            <text x="51" y="68" font-family="Arial,sans-serif" font-size="9" fill="#2A5FB0" text-anchor="middle">Input</text>
+            <rect x="20" y="120" width="62" height="40" rx="6" fill="rgba(42,95,176,0.18)" stroke="#5A85C0" stroke-width="1.5"/>
+            <text x="51" y="136" font-family="Arial,sans-serif" font-size="9" fill="#2A5FB0" text-anchor="middle">Workflow</text>
+            <text x="51" y="148" font-family="Arial,sans-serif" font-size="9" fill="#2A5FB0" text-anchor="middle">Trigger</text>
+            <rect x="20" y="200" width="62" height="40" rx="6" fill="rgba(42,95,176,0.18)" stroke="#5A85C0" stroke-width="1.5"/>
+            <text x="51" y="216" font-family="Arial,sans-serif" font-size="9" fill="#2A5FB0" text-anchor="middle">User</text>
+            <text x="51" y="228" font-family="Arial,sans-serif" font-size="9" fill="#2A5FB0" text-anchor="middle">Query</text>
+            <circle cx="185" cy="60" r="40" fill="#2A5FB0"/>
+            <text x="185" y="55" font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">AI</text>
+            <text x="185" y="67" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.9)" text-anchor="middle">Extract</text>
+            <circle cx="185" cy="140" r="40" fill="#2A5FB0"/>
+            <text x="185" y="135" font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">AI</text>
+            <text x="185" y="147" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.9)" text-anchor="middle">Process</text>
+            <circle cx="185" cy="220" r="40" fill="#2A5FB0"/>
+            <text x="185" y="215" font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="white" text-anchor="middle">AI</text>
+            <text x="185" y="227" font-family="Arial,sans-serif" font-size="8" fill="rgba(255,255,255,0.9)" text-anchor="middle">Generate</text>
+            <rect x="298" y="40" width="62" height="40" rx="6" fill="rgba(192,120,0,0.2)" stroke="#B07000" stroke-width="1.5"/>
+            <text x="329" y="56" font-family="Arial,sans-serif" font-size="9" fill="#8B5800" text-anchor="middle">Structured</text>
+            <text x="329" y="68" font-family="Arial,sans-serif" font-size="9" fill="#8B5800" text-anchor="middle">Data</text>
+            <rect x="298" y="120" width="62" height="40" rx="6" fill="rgba(192,120,0,0.2)" stroke="#B07000" stroke-width="1.5"/>
+            <text x="329" y="136" font-family="Arial,sans-serif" font-size="9" fill="#8B5800" text-anchor="middle">Automated</text>
+            <text x="329" y="148" font-family="Arial,sans-serif" font-size="9" fill="#8B5800" text-anchor="middle">Action</text>
+            <rect x="298" y="200" width="62" height="40" rx="6" fill="rgba(192,120,0,0.2)" stroke="#B07000" stroke-width="1.5"/>
+            <text x="329" y="216" font-family="Arial,sans-serif" font-size="9" fill="#8B5800" text-anchor="middle">AI</text>
+            <text x="329" y="228" font-family="Arial,sans-serif" font-size="9" fill="#8B5800" text-anchor="middle">Response</text>
+            <text x="190" y="278" font-family="Arial,sans-serif" font-size="9" letter-spacing="2" fill="#777" text-anchor="middle">n8n · CLAUDE API · CUSTOM PIPELINE</text>
+          </svg>
+        </div>
+        <div class="svc-fade"></div>
+        <div class="svc-content">
+          <div class="svc-num-label">03</div>
+          <div class="svc-cat-badge blue-b"><span class="badge-dot" style="background:var(--blue-lt);animation:blink 2s ease-in-out infinite;"></span>Software &amp; Application</div>
+          <div class="svc-cat-name blue-n">Software &amp; Application</div>
+          <p class="svc-cat-desc">Custom software and AI application development — from enterprise chatbots to full-stack platforms. Every service is grounded in the experience of building and operating eMatch in production.</p>
+          <div class="sw-sub-grid">
+            <div class="sw-sub"><div class="sw-sub-name">Customized Software Development</div><div class="sw-sub-desc">Full-stack bespoke applications — cloud-native architecture, multi-tenant design, API integration, and subscription billing</div></div>
+            <div class="sw-sub"><div class="sw-sub-name">AI Chatbot Development</div><div class="sw-sub-desc">RAG-powered agents trained on your knowledge base — web, Teams, WhatsApp, or Slack. 24×7 with human escalation</div></div>
+            <div class="sw-sub"><div class="sw-sub-name">Workflow Automation with AI (n8n)</div><div class="sw-sub-desc">AI-powered automations connecting 400+ apps — Lead Capture AI, Invoice Inbox, Support Triage, and more</div></div>
+            <div class="sw-sub"><div class="sw-sub-name">Industrial Writing with AI</div><div class="sw-sub-desc">AI-assisted pipelines for technical documentation, compliance reports, RFP responses, and structured business writing</div></div>
+            <div class="sw-sub"><div class="sw-sub-name">Prompt Engineering</div><div class="sw-sub-desc">Prompt libraries, system prompt design, and governance frameworks — proven in production via eMatch</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EMATCH -->
+<section id="ematch" class="section-pad" style="background:var(--em-bg);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="ematch-grid">
+      <div>
+        <div class="section-eyebrow amber-eye">Flagship SaaS Product</div>
+        <h2 class="section-title" style="color:var(--em-title);"><span class="amber">e</span>Match —<br>AI Talent Matching</h2>
+        <p style="font-size:15px;font-weight:300;color:var(--em-sub);line-height:1.75;max-width:480px;margin-bottom:32px;">Your résumé pool is a dormant revenue engine. eMatch surfaces the right candidate for every live job posting automatically — around the clock, without adding headcount.</p>
+        <div class="ematch-point"><div class="ematch-point-dot" style="background:var(--amber);"></div><div><div class="ematch-point-title">AI Fingerprint Profiling</div><div class="ematch-point-desc">Proprietary designed fingerprint signatures profiling per résumé and JD — AES-256 encrypted at rest on encrypted database.</div></div></div>
+        <div class="ematch-point"><div class="ematch-point-dot" style="background:var(--blue-lt);"></div><div><div class="ematch-point-title">AI Résumé Rewrite Engine</div><div class="ematch-point-desc">Seniority-calibrated rewrites with expert-grade prompt templates — measurable output improvement at scale.</div></div></div>
+        <div class="ematch-point"><div class="ematch-point-dot" style="background:var(--amber);"></div><div><div class="ematch-point-title">Auto-Apply &amp; RFA Dispatch</div><div class="ematch-point-desc">AI auto-applies candidates and dispatches personalised Request-For-Application prompts — full-auto or manual-approval modes.</div></div></div>
+        <div class="ematch-point"><div class="ematch-point-dot" style="background:var(--blue-lt);"></div><div><div class="ematch-point-title">24×7 AI Chatbot with Agent Escalation</div><div class="ematch-point-desc">Candidate consultation without staff involvement — handoff to human agents with pre-filled context.</div></div></div>
+        <a href="https://opnform.com/forms/client-inquiry-service-request-form-zqhnap?2353851e-27a3-4740-9375-fe7be45b1de8=Request+A+Live+Demo" class="btn-amber" target="_blank" rel="noopener" style="margin-top:8px;">Request a Live Demo →</a>
+      </div>
+      <div>
+        <div class="em-product-card">
+          <div style="margin-bottom:6px;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 66" width="200" style="display:block;">
+              <text x="0" y="54" font-family="'Playfair Display',Georgia,serif" font-size="60" font-weight="700" fill="#F5A623">e</text>
+              <text x="39" y="54" font-family="'Playfair Display',Georgia,serif" font-size="60" font-weight="700" fill="#FFFFFF">Match</text>
+            </svg>
+          </div>
+          <div class="em-wordmark-sub">AI Talent Matching Platform</div>
+          <hr class="em-divider">
+          <div class="em-stat-grid">
+            <div class="em-stat-box"><strong>93%</strong><span>Match Accuracy</span></div>
+            <div class="em-stat-box"><strong>3</strong><span>User Portals</span></div>
+            <div class="em-stat-box"><strong>AES-256</strong><span>Encryption at Rest</span></div>
+            <div class="em-stat-box"><strong>SaaS</strong><span>White-label Ready</span></div>
+          </div>
+        </div>
+        <ul class="em-features">
+          <li><span class="em-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Three-sided marketplace</strong> — dedicated portals for Candidates, Employers, and Placement Agents</span></li>
+          <li><span class="em-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>AI-powered matching</strong> — World class cloud AI or local LLM for on-premise deployments</span></li>
+          <li><span class="em-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>White-label ready</strong> — custom branding for enterprise clients with full theming support</span></li>
+          <li><span class="em-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>Integrated payment gateway</strong> — Starter, Plus, and Max tiers with built-in billing</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS — Max/Full Suite is featured (rightmost) -->
+<section class="section-pad" style="background:var(--bg2);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-eyebrow">eMatch Subscriptions</div>
+    <h2 class="section-title">Plans for every stage.</h2>
+    <p class="section-sub">Whether you're a growing recruitment agency or a large enterprise, eMatch scales with your needs. Cancel anytime.</p>
+    <div class="tiers-grid">
+
+      <!-- Starter / Entry Tier -->
+      <div class="tier-card">
+        <div class="tier-pill-label">Entry Tier</div>
+        <div class="tier-name">Starter</div>
+        <div class="tier-desc">Core job discovery and apply tools — the perfect starting point for new agencies and independent recruiters.</div>
+        <ul class="tier-list">
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Job search &amp; bookmark</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Application tracking</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Candidate profile management</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Direct messaging with employers</li>
+        </ul>
+      </div>
+
+      <!-- Plus / Growth Tier -->
+      <div class="tier-card">
+        <div class="tier-pill-label">Growth Tier</div>
+        <div class="tier-name">Plus</div>
+        <div class="tier-desc">AI features fully unlocked — the right choice for active agencies ready to scale placements with automation.</div>
+        <ul class="tier-list">
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Starter</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>AI résumé rewriting</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>AI match scoring per job</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Manual-approval auto-apply</li>
+        </ul>
+      </div>
+
+      <!-- Max / Full Suite — FEATURED -->
+      <div class="tier-card tier-featured">
+        <div class="tier-powerful-badge">Most Powerful Feature</div>
+        <div class="tier-pill-label">Full Suite</div>
+        <div class="tier-name">Max</div>
+        <div class="tier-desc">Everything unlocked — the complete eMatch experience for high-volume agencies and enterprise deployments.</div>
+        <ul class="tier-list">
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Plus</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Full-auto scheduled job apply</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority AI chatbot &amp; agent support</li>
+          <li><svg class="tier-tick" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>24x7 job matching</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why" class="section-pad" style="background:var(--bg3);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-eyebrow">Why 852 Technologies</div>
+    <h2 class="section-title">Practitioners first.<br><em>Advisors second.</em></h2>
+    <p class="section-sub">We combine PMP-certified program management with production AI engineering. Every recommendation we make is grounded in what we've built.</p>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-num">01</div><div class="why-title">We Shipped AI in Production</div><p class="why-desc">eMatch is a live, multi-tenant AI application. We've debugged prompt failures at scale, handled real data quality edge cases, designed for graceful degradation, and managed 24×7 uptime. That operational experience informs every client recommendation.</p></div>
+      <div class="why-card"><div class="why-num">02</div><div class="why-title">PMP-Certified Delivery</div><p class="why-desc">Our program management capability is backed by PMP certification and real delivery experience across complex, multi-stakeholder programs. Governance, risk management, and board-level reporting come standard on every engagement.</p></div>
+      <div class="why-card"><div class="why-num">03</div><div class="why-title">Independent &amp; Vendor-Agnostic</div><p class="why-desc">We don't resell platforms or earn referral fees. Every tool we recommend is chosen because it's right for your situation. That independence is a structural advantage over vendor-aligned integrators.</p></div>
+      <div class="why-card"><div class="why-num">04</div><div class="why-title">Low-Risk Entry, Clear Upside</div><p class="why-desc">A free 15-minute AI health check. A focused readiness assessment. Cancel-anytime SaaS subscriptions. Every engagement is scoped so you see value before making a large commitment.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ASSESSMENT -->
+<section id="assessment" class="section-pad" style="background:var(--bg);border-top:1px solid var(--border);position:relative;overflow:hidden;">
+  <div class="assessment-glow"></div>
+  <div class="container">
+    <div class="assessment-inner">
+      <div>
+        <div class="section-eyebrow">Entry Point</div>
+        <h2 class="section-title">Start with an<br><em>AI health check.</em></h2>
+        <p class="section-sub" style="margin-bottom:28px;">Not sure where to begin? A free 15-minute call gives you your approximate AI maturity score and three actionable priorities for the next 90 days. No report, no prep — just a conversation.</p>
+        <div class="assessment-dims">
+          <div class="assessment-dim"><div class="dim-name">Data quality</div><div class="dim-bar-wrap"><div class="dim-bar" style="width:55%;"></div></div><div class="dim-val">2.5/5</div></div>
+          <div class="assessment-dim"><div class="dim-name">Process maturity</div><div class="dim-bar-wrap"><div class="dim-bar" style="width:65%;"></div></div><div class="dim-val">3.2/5</div></div>
+          <div class="assessment-dim"><div class="dim-name">Infrastructure</div><div class="dim-bar-wrap"><div class="dim-bar" style="width:80%;"></div></div><div class="dim-val">4.0/5</div></div>
+          <div class="assessment-dim"><div class="dim-name">Staff capability</div><div class="dim-bar-wrap"><div class="dim-bar" style="width:36%;"></div></div><div class="dim-val">1.8/5</div></div>
+          <div class="assessment-dim"><div class="dim-name">Leadership alignment</div><div class="dim-bar-wrap"><div class="dim-bar" style="width:58%;"></div></div><div class="dim-val">2.9/5</div></div>
+        </div>
+        <p style="font-size:11px;color:var(--fg5);margin-top:10px;">Example scores — your readiness report shows where to focus</p>
+      </div>
+      <div class="assessment-right">
+        <div class="assessment-box">
+          <div class="a-price-eyebrow">Full AI Readiness Assessment</div>
+          <div class="a-headline">What you get</div>
+          <ul class="a-includes">
+            <li>4–6 stakeholder interviews</li>
+            <li>Maturity scoring across 5 dimensions</li>
+            <li>Board-ready executive summary (2 pages)</li>
+            <li>Full readiness report (10–15 pages)</li>
+            <li>Use case opportunity list (5–10 initiatives)</li>
+            <li>Quick win shortlist with effort estimates</li>
+            <li>60-minute readout and Q&amp;A session</li>
+            <li>2-week fixed delivery · You own the report</li>
+            <li>No strings attached — take the insights with you, with zero obligation to proceed</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+          <a href="https://opnform.com/forms/client-inquiry-service-request-form-zqhnap?2353851e-27a3-4740-9375-fe7be45b1de8=Book+Free+15-Min+Health+Check" class="btn-primary" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Book Free 15-Min Health Check →</a>
+          <a href="https://opnform.com/forms/client-inquiry-service-request-form-zqhnap?2353851e-27a3-4740-9375-fe7be45b1de8=Enquire+About+Full+Assessment" class="btn-ghost" style="width:100%;justify-content:center;" target="_blank" rel="noopener">Enquire About Full Assessment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-pad" style="background:var(--bg2);border-top:1px solid var(--border);position:relative;overflow:hidden;">
+  <div class="contact-glow"></div>
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-eyebrow" style="justify-content:center;">Get in Touch</div>
+      <h2 class="contact-headline">Ready to put<br>your data to <em>work?</em></h2>
+      <p class="contact-sub">Whether you're exploring eMatch, need a custom software build, want an AI health check, or just have a question — we'd love to hear from you.</p>
+      <div class="contact-grid">
+        <div class="contact-cell"><div class="contact-lbl">Worldwide Reach</div><div class="contact-val">Remote-first delivery · Wherever you are</div></div>
+        <div class="contact-cell"><div class="contact-lbl">Response</div><div class="contact-val">Within 24 business hours · Human response</div></div>
+      </div>
+      <div class="contact-cta-row">
+        <a href="https://opnform.com/forms/client-inquiry-service-request-form-zqhnap?2353851e-27a3-4740-9375-fe7be45b1de8=Contact+Us" class="btn-primary" target="_blank" rel="noopener">Contact Us →</a>
+        <a href="https://opnform.com/forms/client-inquiry-service-request-form-zqhnap?2353851e-27a3-4740-9375-fe7be45b1de8=Contact+Us" class="btn-ghost" target="_blank" rel="noopener">Book a 30-Min Call</a>
+        <a href="#assessment" class="btn-ghost">Free AI Health Check</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-mark"><span class="c-tr"></span><span class="c-bl"></span><span class="footer-852">852</span></div>
+    <div class="footer-name">Technologies Ltd.</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#ematch">eMatch</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 852 Technologies · All Rights Reserved</div>
+  <div style="margin-top:6px;">
+    <a href="https://hits.seeyoufarm.com" title="Site visitor counter" style="display:inline-block;opacity:0.7;transition:opacity .2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+      <img src="https://visitor-badge.laobi.icu/badge?page_id=852itconsultant.github.io&left_color=%231B3A5C&right_color=%234A6080&left_text=Visitors" alt="visitor counter" height="20" style="display:block;">
+    </a>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var saved = localStorage.getItem('852-theme');
+    if(saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+  function toggleTheme(){
+    var html = document.documentElement;
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('852-theme', next);
+  }
+</script>
+</body>
+</html>
