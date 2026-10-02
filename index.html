@@ -175,6 +175,8 @@ section{position:relative;z-index:1;transition:background var(--speed);}
 .sw-sub:hover{background:rgba(26,92,214,0.24);border-color:rgba(78,132,232,0.5);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
 .sw-sub-name{font-size:12px;font-weight:600;color:var(--fg);margin-bottom:4px;line-height:1.3;transition:color var(--speed);}
 .sw-sub-desc{font-size:11px;color:var(--fg4);line-height:1.5;transition:color var(--speed);}
+.sw-sub-link{display:inline-block;margin-top:10px;color:var(--blue-lt);font-size:11px;font-weight:600;text-decoration:none;}
+.sw-sub-link:hover{text-decoration:underline;}
 /* EMATCH */
 #ematch{background:var(--em-bg);transition:background var(--speed);}
 .ematch-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
@@ -608,9 +610,10 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:1px solid va
           <div class="svc-num-label">03</div>
           <div class="svc-cat-badge blue-b"><span class="badge-dot" style="background:var(--blue-lt);animation:blink 2s ease-in-out infinite;"></span>Software &amp; Application</div>
           <div class="svc-cat-name blue-n">Software &amp; Application</div>
-          <p class="svc-cat-desc">Custom software and AI application development — from enterprise chatbots to full-stack platforms. Every service is grounded in the experience of building and operating eMatch in production.</p>
+          <p class="svc-cat-desc">Custom web and mobile applications, AI solutions, and workflow automation — from enterprise chatbots to full-stack platforms. Our services draw on experience building and operating our own products.</p>
           <div class="sw-sub-grid">
             <div class="sw-sub"><div class="sw-sub-name">Customized Software Development</div><div class="sw-sub-desc">Full-stack bespoke applications — cloud-native architecture, multi-tenant design, API integration, and subscription billing</div></div>
+            <div class="sw-sub"><div class="sw-sub-name">Mobile App Development</div><div class="sw-sub-desc">Android and iOS apps shaped around real workflows — product UX, cross-platform development, device features, and launch support.</div><a class="sw-sub-link" href="app/stoored/">See Stoored →</a></div>
             <div class="sw-sub"><div class="sw-sub-name">AI Chatbot Development</div><div class="sw-sub-desc">RAG-powered agents trained on your knowledge base — web, Teams, WhatsApp, or Slack. 24×7 with human escalation</div></div>
             <div class="sw-sub"><div class="sw-sub-name">Workflow Automation with AI (n8n)</div><div class="sw-sub-desc">AI-powered automations connecting 400+ apps — Lead Capture AI, Invoice Inbox, Support Triage, and more</div></div>
             <div class="sw-sub"><div class="sw-sub-name">Industrial Writing with AI</div><div class="sw-sub-desc">AI-assisted pipelines for technical documentation, compliance reports, RFP responses, and structured business writing</div></div>
