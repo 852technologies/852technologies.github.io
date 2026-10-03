@@ -57,7 +57,7 @@ button { font: inherit; }
 }
 
 .site-header.is-scrolled { top: 10px; box-shadow: 0 16px 52px rgba(43, 26, 91, .18); }
-.brand img { width: 176px; height: 44px; object-fit: contain; object-position: left center; }
+.site-header .brand img { width: 218px; height: 58px; object-fit: cover; object-position: center; }
 .desktop-nav { display: flex; align-items: center; gap: 30px; font-size: .9rem; font-weight: 600; color: #4f4963; }
 .desktop-nav a, .footer-links a { transition: color .2s ease; }
 .desktop-nav a:hover, .footer-links a:hover { color: var(--purple); }
@@ -337,7 +337,7 @@ button { font: inherit; }
 @media (max-width: 760px) {
   html { scroll-behavior: auto; }
   .site-header, .site-header.is-scrolled { position: absolute; top: 12px; width: calc(100% - 28px); min-height: 58px; gap: 8px; padding: 7px 8px 7px 12px; border-radius: 18px; background: rgba(255,255,255,.96); }
-  .site-header .brand img { width: 138px; height: 42px; object-fit: cover; object-position: center; }
+  .site-header .brand img { width: clamp(160px, 48vw, 192px); height: clamp(43px, 12.8vw, 51px); }
   .header-cta { padding: 10px 12px; border-radius: 12px; font-size: .73rem; }
   .hero { min-height: auto; gap: 10px; padding: clamp(104px, 28vw, 126px) clamp(16px, 5vw, 38px) clamp(28px, 8vw, 48px); }
   .hero::before { inset: 56% -20vw 0 12%; border-radius: 80px 0 0 0; }
